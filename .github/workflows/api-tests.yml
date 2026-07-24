@@ -28,12 +28,13 @@ jobs:
 
       - name: Run API Tests
         run: |
-          newman run "ReqRes API Test.postman_collection.json" \
-            -e "ReqRes Dev.postman_environment.json" \
+          newman run "collections/ReqRes API Test.postman_collection.json" \
+            -e "environments/ReqRes Dev.postman_environment.json" \
             -r htmlextra \
             --reporter-htmlextra-export reports/report.html
 
       - name: Upload HTML Report
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: api-test-report
