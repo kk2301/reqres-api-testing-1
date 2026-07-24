@@ -1,4 +1,4 @@
-name: Run Postman API Tests
+name: API Tests
 
 on:
   push:
