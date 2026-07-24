@@ -1,0 +1,304 @@
+{
+  "info": {
+    "_postman_id": "ef70328d-37b3-46ed-bc0e-019444ad117f",
+    "name": "ReqRes API Test",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "26306807"
+  },
+  "item": [
+    {
+      "name": "Get All Users",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\",function() {\r",
+              "    pm.response.to.have.status(200);\r",
+              "\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response has data array\",function(){\r",
+              "    var jsonData = pm.response.json();\r",
+              "    pm.expect(jsonData.data).to.be.an(\"array\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Page number is 1\" , function(){\r",
+              "    var jsonData =pm. response.json();\r",
+              "    pm.expect(jsonData.page).to.eql(1);\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-api-key",
+            "value": "{{api_key}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/users?page=1",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "users"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "1"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Single User",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\",function() {\r",
+              "    pm.response.to.have.status(200);\r",
+              "\r",
+              "});\r",
+              "pm.test(\"User ID is 2\", function(){\r",
+              "    var jsonData =pm.response.json();\r",
+              "    pm.expect(jsonData.data.id).to.eql(2);\r",
+              "\r",
+              "});\r",
+              "\r",
+              "pm.test(\"User email is correct\", function(){\r",
+              "    var jsonData = pm.response.json();\r",
+              "    pm.expect(jsonData.data.email).to.eql(\"janet.weaver@reqres.in\")\r",
+              "})\r",
+              "\r",
+              "\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-api-key",
+            "value": "{{api_key}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/users/2",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "users",
+            "2"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create User",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 201\",function() {\r",
+              "    pm.response.to.have.status(201);\r",
+              "\r",
+              "});\r",
+              "pm.test(\"User name is Kunal Kumar\", function(){\r",
+              "    var jsonData =pm.response.json();\r",
+              "    pm.expect(jsonData.name).to.eql(\"Kunal Kumar\");\r",
+              "\r",
+              "});\r",
+              "\r",
+              "pm.test(\"User id is Prsesnt\", function(){\r",
+              "    var jsonData = pm.response.json();\r",
+              "    pm.expect(jsonData.id).to.exist;\r",
+              "})\r",
+              "\r",
+              "\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "x-api-key",
+            "value": "{{api_key}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"name\": \"Kunal Kumar\" ,\r\n    \"job\"   : \"Tester\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/users",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "users"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update User",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 201\",function() {\r",
+              "    pm.response.to.have.status(200);\r",
+              "\r",
+              "});\r",
+              "pm.test(\"Job is update to Senior Lead Tester\", function(){\r",
+              "    var jsonData =pm.response.json();\r",
+              "    pm.expect(jsonData.job).to.eql(\"Senior Lead Tester\");\r",
+              "\r",
+              "});\r",
+              "var jsonData = pm.response.json();\r",
+              "console.log(\"Actual Job:\", jsonData.job);\r",
+              "\r",
+              "pm.test(\"Job is updated\", function () {\r",
+              "    pm.expect(jsonData.job).to.eql(\"Senior Lead Tester\");\r",
+              "});\r",
+              "\r",
+              "\r",
+              "\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "x-api-key",
+            "value": "{{api_key}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"name\": \"Kunal Kumar\" ,\r\n    \"job\"   : \"Senior Lead Tester\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/users/2",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "users",
+            "2"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete User",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 204\",function() {\r",
+              "    pm.response.to.have.status(204);\r",
+              "\r",
+              "});\r",
+              "pm.test(\"Response body is empty\", function(){\r",
+              "    pm.expect(pm.response.text()).to.be.empty;\r",
+              "\r",
+              "});\r",
+              "\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "x-api-key",
+            "value": "{{api_key}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/users/2",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "users",
+            "2"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
